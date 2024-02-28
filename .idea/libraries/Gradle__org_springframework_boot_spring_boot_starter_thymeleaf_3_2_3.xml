@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-thymeleaf/3.2.3/dbb434ce42b99f0685963d0a5824cd8f3835a1ac/spring-boot-starter-thymeleaf-3.2.3.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-thymeleaf/3.2.3/7bbd9d620d201a924186909be26973ade8c68e42/spring-boot-starter-thymeleaf-3.2.3-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-thymeleaf/3.2.3/11a04f23ddb54bb0492ba4b24c955f72812e4cd9/spring-boot-starter-thymeleaf-3.2.3-sources.jar!/" />
     </SOURCES>
