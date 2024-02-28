@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/a10.iml" filepath="$PROJECT_DIR$/.idea/a10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/siRelawan.iml" filepath="$PROJECT_DIR$/.idea/modules/siRelawan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/siRelawan.main.iml" filepath="$PROJECT_DIR$/.idea/modules/siRelawan.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/siRelawan.test.iml" filepath="$PROJECT_DIR$/.idea/modules/siRelawan.test.iml" />
     </modules>
   </component>
 </project>
