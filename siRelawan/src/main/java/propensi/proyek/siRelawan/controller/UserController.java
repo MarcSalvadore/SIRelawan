@@ -18,12 +18,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import propensi.proyek.siRelawan.security.jwt.JwtUtils;
-import propensi.proyek.siRelawan.service.UserService;
+//import propensi.proyek.siRelawan.service.UserService;
 
 @Controller
 public class UserController {
-    @Autowired
-    UserService userService;
+//    @Autowired
+//    UserService userService;
 
     @Autowired
     JwtUtils jwtUtils;
