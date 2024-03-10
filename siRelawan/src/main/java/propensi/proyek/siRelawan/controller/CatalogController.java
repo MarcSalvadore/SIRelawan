@@ -192,17 +192,39 @@ public class CatalogController {
         model.addAttribute("users", users);
         return "poinRelawan";
     }
+
+    @GetMapping("/catalog/addpoint")
+    public String showAddPointsForm() {
+        return "addpoint";
+    }
     
     @PostMapping("catalog/addpoint")
-    public ModelAndView addPoints(@RequestParam int points) {
+    public ModelAndView addPoints(@RequestParam int points, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
-        try {
-            // userService.poinAccumulation(points);
-            modelAndView.addObject("message", "Points added successfully");
-        } catch (Exception e) {
-            modelAndView.addObject("error", "Failed to add points: " + e.getMessage());
+        String currentUsername = (String) session.getAttribute("currentUser");
+        
+        // Validate that the points to be added are not negative
+        if (points < 0) {
+            modelAndView.addObject("error", "Failed to add points: Points cannot be negative.");
+            modelAndView.setViewName("catalog/addpoint");
+            return modelAndView;
         }
-        modelAndView.setViewName("catalog/leaderboard");
+        try {
+            // Method for adding current user point
+            userService.accumulatePoin(currentUsername, points);
+            
+            // Success message
+            modelAndView.addObject("message", "Points added successfully");
+            
+            // Redirect to the leaderboard page
+            modelAndView.setViewName("redirect:/catalog/leaderboard");
+            return modelAndView;
+        } catch (Exception e) {
+            // Handle exceptions and add error message
+            modelAndView.addObject("error", "Failed to add points: " + e.getMessage());
+            modelAndView.setViewName("catalog/addpoint");
+        }
         return modelAndView;
     }
+
 }
