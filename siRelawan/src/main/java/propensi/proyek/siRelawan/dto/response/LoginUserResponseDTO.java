@@ -1,4 +1,4 @@
-package propensi.proyek.siRelawan.dto;
+package propensi.proyek.siRelawan.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TokenDTO {
-    private String token;
+public class LoginUserResponseDTO {
+    String token;
 }

@@ -1,6 +1,8 @@
 package propensi.proyek.siRelawan.dto.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
 
 @AllArgsConstructor
 @NoArgsConstructor
