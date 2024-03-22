@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="h2 text-center">Sign In</h1>
-                        <form action="login" method="post">
+                        <form action="#" th:action="@{/login}" method="post">
                             <div class="form-group mt-2">
                                 <label>Username</label>
                                 <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username">
@@ -30,7 +30,8 @@
                                 <button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Submit</button>
                             </div>
                             <div class="form-group text-center">
-                                <a class="mt-4" th:href="@{/register}">Don't have an account? Sign Up</a>
+                                <a>Don't have an account?</a>
+                                <a class="mt-4" th:href="@{/register}"><span style="color: blue;">Sign Up</span></a>
                             </div>
                         </form>
                     </div>

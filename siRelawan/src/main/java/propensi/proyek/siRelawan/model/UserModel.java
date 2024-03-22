@@ -1,6 +1,5 @@
 package propensi.proyek.siRelawan.model;
 
-import java.util.Date;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -9,7 +8,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

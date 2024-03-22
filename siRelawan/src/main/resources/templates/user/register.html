@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
-    <title>Register</title>
+    <title>Form Register</title>
 </head>
 
 <body>
@@ -20,19 +20,19 @@
                         <form th:action="@{/register}" th:object="${userDTO}" method="post">
                             <div class="form-group mt-2">
                                 <label>Nama Lengkap</label>
-                                <input required="true"  th:field="*{name}" class="form-control form-control-lg" type="text" name="name" placeholder="Enter your name">
+                                <input required="true"  th:field="*{fullName}" class="form-control form-control-lg" type="text" name="fullname" placeholder="Enter Your Full Name">
                             </div>
                             <div class="form-group mt-2">
                                 <label>Email</label>
-                                <input required="true" th:field="*{username}" class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username">
+                                <input required="true" th:field="*{email}" class="form-control form-control-lg" type="text" name="email" placeholder="Enter Your Email">
                             </div>
                             <div class="form-group mt-2">
                                 <label>Nomor Handphone</label>
-                                <input required="true" th:field="*{nomorWA}" class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username">
+                                <input required="true" th:field="*{nomorWA}" class="form-control form-control-lg" type="text" name="nomorWA" placeholder="Enter Phone Number">
                             </div>
                             <div class="form-group mt-2">
                                 <label>Username</label>
-                                <input required="true" th:field="*{username}" class="form-control form-control-lg" type="email" name="email" placeholder="Enter your username">
+                                <input required="true" th:field="*{username}" class="form-control form-control-lg" type="text" name="email" placeholder="Enter your username">
                             </div>
                             <div class="form-group mt-2">
                                 <label>Password</label>
@@ -40,6 +40,9 @@
                             </div>
                             <div class="form-group text-center">
                                 <button class="btn btn-primary btn-lg btn-block mt-4" type="submit">Submit</button>
+                            </div>
+                            <div class="form-group text-center">
+                                <a class="mt-4" th:href="@{/login}">Back</a>
                             </div>
                         </form>
                     </div>
