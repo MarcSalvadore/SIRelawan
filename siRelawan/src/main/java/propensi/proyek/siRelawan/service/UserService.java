@@ -12,4 +12,5 @@ public interface UserService {
     // String getUsernameFromToken(String token);
     void createUser(CreateUserRequestDTO userRequestDTO);
     boolean authenticateUser(String username, String password);
+    String getUsername(String username);
 }

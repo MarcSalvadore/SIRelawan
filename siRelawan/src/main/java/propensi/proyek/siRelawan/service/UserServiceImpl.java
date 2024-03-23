@@ -59,6 +59,11 @@ public class UserServiceImpl implements UserService {
         return false;
     }
     
+    @Override
+    public String getUsername(String username) {
+        UserModel user = userDb.findByUsername(username);
+        return user.getUsername();
+    }
 
     // @Override
     // public String getToken(String username, String fullName) {
