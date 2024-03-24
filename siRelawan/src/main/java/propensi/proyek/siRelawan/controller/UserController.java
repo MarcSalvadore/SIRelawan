@@ -80,9 +80,4 @@ public class UserController {
         }
     }
     
-    @GetMapping("/home")
-    public String homePage() {
-        return "home";
-    }
-    
 }
