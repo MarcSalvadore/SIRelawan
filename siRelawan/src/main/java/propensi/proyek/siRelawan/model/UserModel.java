@@ -59,4 +59,16 @@ public class UserModel {
     @NotNull
     @Column(name = "poin", nullable = false)
     private int poin = 0;
+
+    @NotNull
+    @Column(name = "nik", nullable = false)
+    private Long NIK;
+
+    @NotNull
+    @Column(name = "npwp", nullable = false)
+    private Long NPWP;
+
+    @NotNull
+    @Column(name = "no_rekening", nullable = false)
+    private Long noRekening;
 }
