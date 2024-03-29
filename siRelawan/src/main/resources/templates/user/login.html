@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+        <div class="row">
+            <div class="col-sm-10 col-md-8 col-lg-6 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <p></p><p></p>
+                        <h1 class="h2 text-center"><b>SIRelawan</b></h1>
+                        <h6 class="h6 text-center">Please log in to your account</h6>
+                        <p></p>
+                        <form action="#" th:action="@{/login}" method="post">
+                            <div class="form-group mt-2">
+                                <label><b>Username</b></label>
+                                <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username">
+                            </div>
+                            <div class="form-group mt-2">
+                                <label><b>Password</b></label>
+                                <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password">
+                            </div>
+                            <p></p>
+                            <button class="btn btn-primary btn-lg btn-block w-100 mt-2" type="submit"><b>Log In</b></button>
+                            <div class="form-group text-center">
+                            </div>
+                            <p></p>
+                            <div class="form-group text-center">
+                                <span>Don't have an account?</span>
+                                <a class="mt-4 ml-2" th:href="@{/register}"><span style="color: dodgerblue;">Sign Up</span></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

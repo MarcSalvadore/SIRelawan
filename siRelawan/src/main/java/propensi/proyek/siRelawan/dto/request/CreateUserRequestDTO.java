@@ -2,6 +2,7 @@ package propensi.proyek.siRelawan.dto.request;
 
 import lombok.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +20,6 @@ public class CreateUserRequestDTO {
     @NotBlank(message = "Email tidak boleh kosong")
     private String email;
     
-    @NotBlank(message = "Nomor WA tidak boleh kosong")
+    @NotNull(message = "Nomor WA tidak boleh kosong")
     private Long nomorWA;
 }
