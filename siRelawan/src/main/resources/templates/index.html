@@ -48,7 +48,7 @@
               >
                 <i class="fa fa-chart-line fa-3x text-primary"></i>
                 <div class="ms-3">
-                  <p class="mb-2">Statistik program sosial</p>
+                  <a class="mb-2" th:href="@{/catalog/statistik}">Statistik program sosial</a>
                   <h6
                     class="mb-0"
                     th:text="${#lists.size(listCatalog)} + ' Program'"
@@ -93,7 +93,7 @@
                     <td th:text="${catalog.deskripsi}"></td>
                     <td th:text="${catalog.status}"></td>
                     <td>
-                      <a class="btn btn-sm btn-primary" href="">Detail</a>
+                      <a class="btn btn-sm btn-primary" th:href="@{/catalog/detail-program/} + ${catalog.id}">Detail</a>
                     </td>
                   </tr>
                 </tbody>
