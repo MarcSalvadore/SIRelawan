@@ -8,6 +8,7 @@ import propensi.proyek.siRelawan.model.EnumRole;
 import propensi.proyek.siRelawan.model.UserModel;
 import propensi.proyek.siRelawan.repository.UserDb;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,6 +64,11 @@ public class UserServiceImpl implements UserService {
     public String getUsername(String username) {
         UserModel user = userDb.findByUsername(username);
         return user.getUsername();
+    }
+
+    @Override
+    public List<UserModel> getAllUser() {
+        return userDb.findAll();
     }
 
     // @Override
