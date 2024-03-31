@@ -2,10 +2,7 @@ package propensi.proyek.siRelawan.model;
 
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -35,5 +32,12 @@ public class Catalog {
 
     @NotNull
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
+        NOT_STARTED,
+        IN_PROGRESS,
+        COMPLETED
+    }
 }
