@@ -55,4 +55,8 @@ public class UserModel {
     @NotNull
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
+
+    @NotNull
+    @Column(name = "poin", nullable = false)
+    private int poin = 0;
 }
