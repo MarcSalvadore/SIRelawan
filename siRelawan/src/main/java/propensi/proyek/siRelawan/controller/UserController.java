@@ -72,12 +72,18 @@ public class UserController {
         boolean isAuthenticated = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
         if (isAuthenticated) {
             // Redirect to home.html if isAuthenticated return True
+            model.addAttribute("username", loginRequest.getUsername());
             return "redirect:/home";
         } else {
             // Add error message and redirect back to login page
             redirectAttributes.addFlashAttribute("error", "Incorrect username or password");
             return "redirect:/login";
         }
+    }
+    
+    @GetMapping("/home")
+    public String homePage() {
+        return "home";
     }
     
 }
