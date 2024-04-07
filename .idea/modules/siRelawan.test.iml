@@ -13,6 +13,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" />
+          <factory-entry name="siRelawan.test" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
@@ -36,11 +37,12 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-integration:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-data-jpa:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-validation:3.0.4" level="project" />
-    <orderEntry type="library" name="Gradle: org.mapstruct:mapstruct:1.5.3.Final" level="project" />
+    <orderEntry type="library" name="Gradle: org.mapstruct:mapstruct:1.5.0.Final" level="project" />
     <orderEntry type="library" name="Gradle: io.jsonwebtoken:jjwt:0.9.1" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.15.4" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-test:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:2.2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-json:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-reactor-netty:3.2.3" level="project" />
@@ -84,7 +86,6 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-logging:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: jakarta.annotation:jakarta.annotation-api:2.1.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:2.2" level="project" />
     <orderEntry type="library" name="Gradle: io.projectreactor.netty:reactor-netty-http:1.1.16" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-beans:6.1.4" level="project" />
     <orderEntry type="library" name="Gradle: io.projectreactor:reactor-core:3.6.3" level="project" />
