@@ -50,9 +50,21 @@ public class UserModel {
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private EnumRole role;
+    private EnumRole role = EnumRole.RELAWAN;
 
     @NotNull
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = false;
+
+    @NotNull
+    @Column(name = "poin", nullable = false)
+    private int poin = 0;
+
+    // 3 Variabel tambahan untuk melengkapi profile user (Not included in registration)
+    @Column(name = "nik")
+    private Long NIK;
+    @Column(name = "npwp")
+    private Long NPWP;
+    @Column(name = "no_rekening")
+    private Long noRekening;
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Manajemen Relawan</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <div
+            id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+        <div
+                class="spinner-border text-primary"
+                style="width: 3rem; height: 3rem"
+                role="status"
+        >
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <nav th:replace="~{fragments/sidebar :: sidebar('statistik')}"></nav>
+
+    <div class="content">
+        <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-4">
+                <div>
+                    <h2 class="mb-0">Detail Program Sosial</h2>
+                    <br>
+                </div>
+                <div>
+                    <input type="hidden" id="programId" th:value="${program.id}" />
+                    <p th:text="'Nama Kegiatan: ' + ${program.nama}"></p>
+                    <p th:text="'Tanggal Mulai: ' + ${program.tanggalMulai}"></p>
+                    <p th:text="'Deskripsi: ' + ${program.deskripsi}"></p>
+                    <p th:text="'Status: ' + ${status}"></p>
+                </div>
+                <div>
+                    <a type="button" class="btn btn-primary" th:href="@{/catalog/edit-program/} + ${program.id}">Edit</a>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p id="deleteMessage">Apakah Anda yakin ingin menghapus program ini?</p>
+                            <p id="successMessage" style="display: none; color: green;">Program berhasil dihapus!</p>
+                            <p id="errorMessage" style="display: none; color: red;">Terjadi kesalahan pada sistem</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                            <button type="button" class="btn btn-danger" onclick="deleteProgram()">Ya</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deleteProgram() {
+        var id = $("#programId").val();
+        console.log(id);
+        $.ajax({
+            url: "/catalog/delete-program/" + id ,
+            type: "POST",
+            success: function(data) {
+                $("#deleteMessage").hide();
+                $("#successMessage").show();
+                $(".modal-footer").hide();
+
+                setTimeout(function() {
+                    window.location.href = "/home";
+                }, 1000);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                $("#deleteMessage").hide();
+                $("#errorMessage").show();
+                $(".modal-footer").hide();
+            }
+        });
+    }
+</script>
+</body>
+</html>
