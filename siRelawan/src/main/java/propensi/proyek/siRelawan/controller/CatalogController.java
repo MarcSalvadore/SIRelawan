@@ -1,11 +1,19 @@
 package propensi.proyek.siRelawan.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpStatus;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.access.prepost.PreAuthorize;
 
 import jakarta.validation.Valid;
 
@@ -19,11 +27,20 @@ import propensi.proyek.siRelawan.model.UserModel;
 import propensi.proyek.siRelawan.service.CatalogService;
 import propensi.proyek.siRelawan.service.UserService;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-@Controller
-public class CatalogController {
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+
+
+@Controller
+public class CatalogController {              
     @Autowired
     private CatalogService catalogService;
 
@@ -39,6 +56,7 @@ public class CatalogController {
         return "index";
     }
 
+    // @PreAuthorize("hasRole('SUPERADMIN')")
     @GetMapping("catalog/create")
     public String formAddCatalog(Model model) {
         // Membuat DTO baru sebagai isian form pengguna
@@ -72,6 +90,7 @@ public class CatalogController {
         return value != null && value != 0;
     }
 
+    // @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     @GetMapping("catalog/statistik")
     public String statistikPage(Model model) {
         List<Catalog> listCatalog = catalogService.getAllCatalog();
@@ -102,9 +121,9 @@ public class CatalogController {
             if (user.getRole().equals(EnumRole.RELAWAN)) {
                 relawanCount++;
             }
-            if (isNonEmpty(user.getFullName()) && isNonEmpty(user.getNomorWA())) {
-                dataCompleteCount++;
-            }
+            // if (isNonEmpty(user.getNIK()) && isNonEmpty(user.getNPWP()) && isNonEmpty(user.getNoRekening())) {
+            //     dataCompleteCount++;
+            // }
         }
 
         model.addAttribute("notStartedCount", notStartedCount);
@@ -133,6 +152,7 @@ public class CatalogController {
         return "catalog/detail-program";
     }
 
+    // @PreAuthorize("hasRole('SUPERADMIN')")
     @GetMapping("catalog/edit-program/{id}")
     public String formUpdateProgram(@PathVariable String id, Model model) {
         Catalog catalog = catalogService.getCatalogById(id);
@@ -150,9 +170,39 @@ public class CatalogController {
         model.addAttribute("id", catalog.getId());
         return "catalog/edit-program-sukses.html";
     }
+
     @PostMapping("catalog/delete-program/{id}")
     public String deleteProgram(@PathVariable String id, Model model) {
         catalogService.deleteCatalogById(id);
         return "redirect:/home";
+    }
+
+    @GetMapping("catalog/leaderboard")
+    public String showLeaderboard(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        String currentUsername = (String) session.getAttribute("currentUser");
+        int currentUserPoint = userService.getUserPoint(currentUsername);
+        // Memasukkan data dari user yang login
+        model.addAttribute("currentUsername", currentUsername);
+        model.addAttribute("currentUserPoints", currentUserPoint);
+
+        List<UserModel> users = userService.getAllUser();
+        // Mengurutkan user dengan poin tertinggi ke terendah
+        Collections.sort(users, Comparator.comparingInt(UserModel::getPoin).reversed());
+        model.addAttribute("users", users);
+        return "poinRelawan";
+    }
+    
+    @PostMapping("catalog/addpoint")
+    public ModelAndView addPoints(@RequestParam int points) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            // userService.poinAccumulation(points);
+            modelAndView.addObject("message", "Points added successfully");
+        } catch (Exception e) {
+            modelAndView.addObject("error", "Failed to add points: " + e.getMessage());
+        }
+        modelAndView.setViewName("catalog/leaderboard");
+        return modelAndView;
     }
 }
