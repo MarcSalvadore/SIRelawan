@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- Sidebar Start -->
+    <div th:fragment="sidebar(page)" class="sidebar pe-4 pb-3">
+      <nav class="navbar bg-light navbar-light">
+        <a href="/" class="navbar-brand mx-4 mb-3">
+          <h3 class="text-primary">SiRelawan</h3>
+        </a>
+        <div class="d-flex align-items-center ms-4 mb-4">
+          <div class="position-relative">
+            <img
+              class="rounded-circle"
+              src="/img/user.jpg"
+              alt=""
+              style="width: 40px; height: 40px"
+            />
+            <div
+              class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"
+            ></div>
+          </div>
+          <div class="ms-3">
+            <h6 class="mb-0">Admin Sirelawan</h6>
+            <span>Admin</span>
+          </div>
+        </div>
+        <div class="navbar-nav w-100">
+          <a href="/home" class="nav-item nav-link" th:classappend="${page == 'index' ? 'active' : ''}"
+            ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a
+          >
+
+          <a href="/catalog/create" class="nav-item nav-link" th:classappend="${page == 'form' ? 'active' : ''}"
+            ><i class="fa fa-keyboard me-2"></i>Forms</a
+          >
+
+          <a href="/catalog/statistik" class="nav-item nav-link" th:classappend="${page == 'statistik' ? 'active' : ''}"
+            ><i class="fas fa-chart-bar"></i>Statistik</a
+          >
+
+          <a href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
+            ><i class="fas fa-user-alt"></i>Leaderboard</a
+          >
+        </div>
+        <!-- Logout Button -->
+        <div class="navbar-nav w-100 mt-auto"> <!-- 'mt-auto' class added to push it to the bottom -->
+          <a href="/logout" class="nav-item nav-link"><i class="fas fa-user-alt"></i>Log Out</a>
+        </div>
+      </nav>
+    </div>
+    <!-- Sidebar End -->
+  </body>
+</html>
