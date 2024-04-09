@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="navbar-nav w-100">
-          <a href="/" class="nav-item nav-link" th:classappend="${page == 'home' ? 'active' : ''}"
+          <a href="/home" class="nav-item nav-link" th:classappend="${page == 'index' ? 'active' : ''}"
             ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a
           >
 
@@ -40,6 +40,14 @@
           <a href="/catalog/statistik" class="nav-item nav-link" th:classappend="${page == 'statistik' ? 'active' : ''}"
             ><i class="fas fa-chart-bar"></i>Statistik</a
           >
+
+          <a href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
+            ><i class="fas fa-user-alt"></i>Leaderboard</a
+          >
+        </div>
+        <!-- Logout Button -->
+        <div class="navbar-nav w-100 mt-auto"> <!-- 'mt-auto' class added to push it to the bottom -->
+          <a href="/logout" class="nav-item nav-link"><i class="fas fa-user-alt"></i>Log Out</a>
         </div>
       </nav>
     </div>
