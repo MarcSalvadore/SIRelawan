@@ -94,7 +94,7 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("user/update")
+    @GetMapping("user/profile")
     public String formUpdate(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         String currentUsername = (String) session.getAttribute("currentUser");
@@ -103,7 +103,7 @@ public class UserController {
         return "profileAccount";
     }
 
-    @PostMapping("user/update")
+    @PostMapping("user/profile")
     public String updateAccount(@Valid @RequestBody UpdateUserRequestDTO updateUserRequestDTO, 
                                 HttpServletRequest request, 
                                 RedirectAttributes redirectAttributes, 
