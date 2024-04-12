@@ -45,9 +45,26 @@ public class SiRelawanApplication implements CommandLineRunner{
             Long nomorWA = 628000000000L + random.nextInt(1000000000);
             EnumRole role = EnumRole.RELAWAN;
             int poin = 20000 + random.nextInt(150001);
-            Long nik = 1000000000000L + random.nextInt(1000000000);
-            Long npwp = 1000000000000L + random.nextInt(1000000000);
-            Long noRekening = 1000000000000L + random.nextInt(1000000000);
+
+            // Calculate the base values to ensure the desired digit length
+            long baseNik = 1000000000000000L; // Base for NIK (16 digits)
+            long baseNpwp = 100000000000000L; // Base for NPWP (15 digits)
+            long baseNoRekening = 100000000000L; // Base for NoRekening (12 digits)
+
+            // Random ranges based on lengths
+            long rangeNik = 1000000000000L; // Range for NIK addition
+            long rangeNpwp = 100000000000L; // Range for NPWP addition
+            long rangeNoRekening = 1000000000L; // Range for NoRekening addition
+
+            // Ensure the range is positive and greater than zero before using it
+            if (rangeNik <= 0 || rangeNpwp <= 0 || rangeNoRekening <= 0) {
+                throw new IllegalArgumentException("Range for random number generation must be positive.");
+            }
+
+            // Generate random numbers with the correct length
+            long nik = baseNik + (long) (random.nextDouble() * rangeNik);
+            long npwp = baseNpwp + (long) (random.nextDouble() * rangeNpwp);
+            long noRekening = baseNoRekening + (long) (random.nextDouble() * rangeNoRekening);
 
             UserModel user = new UserModel(UUID.randomUUID(), fullName, username, password, email,
                     nomorWA, role, false, poin, nik, npwp, noRekening);
