@@ -116,14 +116,23 @@ public class CatalogController {
         List<UserModel> listUser = userService.getAllUser();
         int relawanCount = 0;
         int dataCompleteCount = 0;
+        int dataNotCompleteCount = 0;
 
         for (UserModel user : listUser) {
             if (user.getRole().equals(EnumRole.RELAWAN)) {
                 relawanCount++;
             }
-            // if (isNonEmpty(user.getNIK()) && isNonEmpty(user.getNPWP()) && isNonEmpty(user.getNoRekening())) {
-            //     dataCompleteCount++;
-            // }
+
+            if (isNonEmpty(user.getNIK()) && isNonEmpty(user.getNPWP()) && isNonEmpty(user.getNoRekening())) {
+                dataCompleteCount++;
+            }
+
+        }
+
+        if (dataCompleteCount >= relawanCount) {
+            dataNotCompleteCount = dataCompleteCount - relawanCount;
+        } else {
+            dataNotCompleteCount = relawanCount - dataCompleteCount;
         }
 
         model.addAttribute("notStartedCount", notStartedCount);
@@ -132,6 +141,8 @@ public class CatalogController {
 
         model.addAttribute("relawanCount", relawanCount);
         model.addAttribute("dataCompleteCount", dataCompleteCount);
+        model.addAttribute("dataNotCompleteCount", dataNotCompleteCount);
+
         return "statistik";
     }
 
