@@ -89,7 +89,7 @@
                 </div>
                 <div class="card" style="width: 30%">
                     <h2>Relawan yang Belum Melengkapi Data Diri</h2>
-                    <p th:text="${relawanCount} - ${dataCompleteCount}"></p>
+                    <p th:text="${dataCompleteCount} - ${relawanCount}"></p>
                 </div>
             </div>
         </div>
@@ -110,7 +110,7 @@
     var completedCount = [[${completedCount}]];
 
     var dataCompleteCount = [[${dataCompleteCount}]];
-    var dataNotCompleteCount = [[${relawanCount}]] - [[${dataCompleteCount}]];
+    var dataNotCompleteCount = [[${dataCompleteCount}]] - [[${relawanCount}]];
 
     var pieChartData = {
         labels: ["Belum dimulai", "Sedang dikerjakan", "Selesai"],
