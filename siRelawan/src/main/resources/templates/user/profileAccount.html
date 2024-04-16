@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Manajemen Poin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    
+    <style>
+        input:read-only {
+            background-color: #f2f2f2; /* Light gray background color */
+            border-color: #ccc; /* Light gray border color */
+            color: #333; /* Text color */
+            cursor: not-allowed; /* Indicates that the field cannot be edited */
+        }
+    </style>
+    <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="~{fragments/sidebar :: sidebar('profile')}"></nav>
+<div class="content">
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container-fluid pt-0 px-0">
+        <div class="bg-light rounded p-5">
+            <h1 class="my-4 text-center">User Profile</h1>
+            <!-- Display success message if account is updated -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <p th:text="${success}"></p>
+            </div>
+            <!-- Display warning message if there is a warning -->
+            <div th:if="${warning}" class="alert alert-warning" role="alert">
+                <p th:text="${warning}"></p>
+            </div>
+            <!-- User Profile Information -->
+            <div class="card">
+                <div class="card-body">
+                    <form action="/user/profile" method="post">
+                        <!-- Form Group for Full Name -->
+                        <div class="form-group row mb-2">
+                            <label for="fullName" class="col-md-3 col-form-label"><strong>Full Name:</strong></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="fullName" name="fullName" th:field="*{accountData.fullName}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Form Group for Email -->
+                        <div class="form-group row mb-2">
+                            <label for="email" class="col-md-3 col-form-label"><strong>Email:</strong></label>
+                            <div class="col-md-9">
+                                <input type="email" class="form-control" id="email" name="email" th:field="*{accountData.email}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Form Group for WhatsApp Number -->
+                        <div class="form-group row mb-2">
+                            <label for="nomorWA" class="col-md-3 col-form-label"><strong>WhatsApp Number:</strong></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="nomorWA" name="nomorWA" th:field="*{accountData.nomorWA}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Form Group for Username -->
+                        <div class="form-group row mb-2">
+                            <label for="username" class="col-md-3 col-form-label"><strong>Username:</strong></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="username" name="username" th:field="*{accountData.username}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Form Group for Role -->
+                        <div class="form-group row mb-2">
+                            <label for="role" class="col-md-3 col-form-label"><strong>Role:</strong></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="role" name="role" th:field="*{accountData.role}" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Form Group for NIK -->
+                        <div class="form-group row mb-2">
+                            <label for="NIK" class="col-md-3 col-form-label"><strong>NIK:</strong></label>
+                            <div class="col-md-9">
+                                <!-- <input type="text" class="form-control" id="NIK" name="NIK" th:field="*{accountData.NIK}"> -->
+                                <input type="text" class="form-control" id="NIK" name="NIK" th:field="*{accountData.NIK}" pattern="\d+" title="Please enter a valid number." required>
+                            </div>
+                        </div>
+
+                        <!-- Form Group for NPWP -->
+                        <div class="form-group row mb-2">
+                            <label for="NPWP" class="col-md-3 col-form-label"><strong>NPWP:</strong></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="NPWP" name="NPWP" th:field="*{accountData.NPWP}">
+                            </div>
+                        </div>
+
+                        <!-- Form Group for Bank Account Number -->
+                        <div class="form-group row mb-4">
+                            <label for="noRekening" class="col-md-3 col-form-label"><strong>Bank Account Number:</strong></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="noRekening" name="noRekening" th:field="*{accountData.noRekening}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="submit" class="col-md-3 col-form-label"><strong></strong></label>
+                            <div class="col-md-9">
+                                <button type="submit" class="btn btn-primary text-center">Update Profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
