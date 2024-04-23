@@ -18,5 +18,5 @@ public interface UserService {
     void accumulatePoin(String username, int poin);
     void updateUser(String username, UpdateUserRequestDTO updateUserRequestDTO);
     List<UserModel> getAllUser();
- 
+
 }
