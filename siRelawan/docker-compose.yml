@@ -10,6 +10,13 @@ services:
       - POSTGRES_PASSWORD=secret99
     volumes: 
       - db:/var/lib/postgresql/data
+    networks:
+      - backend-network
 volumes:
   db:
     driver: local
+networks:
+  frontend-network:
+    driver: bridge
+  backend-network:
+    driver: bridge
