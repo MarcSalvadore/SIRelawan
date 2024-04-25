@@ -1,4 +1,5 @@
 version: '3.3'
+
 services:
   db:
     image: postgres:14-alpine
@@ -12,9 +13,29 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - backend-network
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '9099:9099'
+    volumes:
+      - ./file-storage:/file-storage
+      - ./log:/log
+    env_file:
+      - siRelawan/.env
+    depends_on:
+      - db
+    networks:
+      - backend-network
+      - frontend-network
+      
 volumes:
   db:
     driver: local
+
 networks:
   frontend-network:
     driver: bridge
