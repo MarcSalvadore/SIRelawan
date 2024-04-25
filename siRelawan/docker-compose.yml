@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - '9099:9099'
+      - '10001:8080'
     volumes:
       - ./file-storage:/file-storage
       - ./log:/log
