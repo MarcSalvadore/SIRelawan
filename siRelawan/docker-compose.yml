@@ -24,8 +24,6 @@ services:
     volumes:
       - ./file-storage:/file-storage
       - ./log:/log
-    env_file:
-      - .env
     depends_on:
       - db
     networks:
