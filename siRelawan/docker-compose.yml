@@ -25,13 +25,13 @@ services:
       - ./file-storage:/file-storage
       - ./log:/log
     env_file:
-      - siRelawan/.env
+      - .env
     depends_on:
       - db
     networks:
       - backend-network
       - frontend-network
-      
+
 volumes:
   db:
     driver: local
