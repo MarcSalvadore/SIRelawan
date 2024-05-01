@@ -17,6 +17,7 @@ public interface UserService {
     UserModel getCurrentUser(String username);
     void accumulatePoin(String username, int poin);
     void updateUser(String username, UpdateUserRequestDTO updateUserRequestDTO);
+    void deleteUser(String username);
     List<UserModel> getAllUser();
  
 }
