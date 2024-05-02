@@ -80,8 +80,8 @@ public class UserController {
             return "redirect:/home";
         } else {
             // Add error message and redirect back to login page
-            redirectAttributes.addFlashAttribute("error", "Incorrect username or password");
-            return "user/login";
+            redirectAttributes.addFlashAttribute("warning", "Incorrect username or password");
+            return "redirect:/login";
         }
     }
     
@@ -94,6 +94,22 @@ public class UserController {
         redirectAttributes.addFlashAttribute("success", "You have been logged out successfully.");
         return "redirect:/login";
     }
+
+    @PostMapping("/user/delete")
+    public String deleteAccount(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        HttpSession session = request.getSession();
+        String currentUsername = (String) session.getAttribute("currentUser");
+        
+        // Perform delete account operation
+        userService.deleteUser(currentUsername);
+        
+        // Invalidate the session to log out the user
+        session.invalidate();
+        
+        redirectAttributes.addFlashAttribute("success", "Your account has been successfully deleted.");
+        return "redirect:/login";
+    }
+    
 
     @GetMapping("user/profile")
     public String formUpdate(HttpServletRequest request, Model model) {
@@ -136,8 +152,13 @@ public class UserController {
             isValid = false;
         }
 
-        if (noRekening != null && noRekening.toString().length() != 12) {
-            redirectAttributes.addFlashAttribute("warning", "Bank account number must be 12 digits long.");
+        if (noRekening.toString().length() == 11 || noRekening.toString().length() == 14) {
+            redirectAttributes.addFlashAttribute("warning", "Bank account number cannot be 11 or 14 digits");
+            isValid = false;
+        }
+
+        if (noRekening != null && noRekening.toString().length() < 10 || noRekening.toString().length() > 16) {
+            redirectAttributes.addFlashAttribute("warning", "Bank account number must be 10 - 16 digits");
             isValid = false;
         }
 
