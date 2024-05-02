@@ -1,5 +1,21 @@
-FROM openjdk:17-alpine
-ARG JAR_FILE=build/libs/siRelawan-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-EXPOSE 9099
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM gradle:jdk17-alpine
+ARG PRODUCTION
+ARG PROD_PASSWORD
+ARG DATABASE_URL_PROD
+ARG PROD_USERNAME
+
+ENV PRODUCTION ${PRODUCTION}
+ENV PROD_PASSWORD ${PROD_PASSWORD}
+ENV DATABASE_URL_PROD ${DATABASE_URL_PROD}
+ENV PROD_USERNAME ${PROD_USERNAME}
+
+WORKDIR /app
+COPY ./build/libs/siRelawan-0.0.1-SNAPSHOT.jar ./app
+EXPOSE 8080
+CMD ["java","-jar","siRelawan-0.0.1-SNAPSHOT.jar"]
+
+# FROM openjdk:17-alpine
+# ARG JAR_FILE=build/libs/siRelawan-0.0.1-SNAPSHOT.jar
+# COPY ${JAR_FILE} app.jar
+# EXPOSE 9099
+# ENTRYPOINT ["java","-jar","/app.jar"]

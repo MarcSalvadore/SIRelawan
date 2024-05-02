@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SiRelawanApplication<siRelawan>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "propensi.proyek.siRelawan.SiRelawanApplication",
+            "projectName": "siRelawan",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
