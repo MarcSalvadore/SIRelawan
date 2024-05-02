@@ -19,5 +19,5 @@ public interface UserService {
     void updateUser(String username, UpdateUserRequestDTO updateUserRequestDTO);
     void deleteUser(String username);
     List<UserModel> getAllUser();
- 
+
 }
