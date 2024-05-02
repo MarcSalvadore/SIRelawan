@@ -12,6 +12,16 @@
             color: #333; /* Text color */
             cursor: not-allowed; /* Indicates that the field cannot be edited */
         }
+        .buttons {
+            width: 200px;
+            margin: 0 auto;
+            display: inline;
+        }
+        .action_btn {
+            width: 200px;
+            margin: 0 auto;
+            display: inline;
+        }
     </style>
     <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
@@ -100,10 +110,25 @@
                                 <input type="text" class="form-control" id="noRekening" name="noRekening" th:field="*{accountData.noRekening}">
                             </div>
                         </div>
+
+                        <!-- Form row for User Button -->
                         <div class="form-group row">
-                            <label for="submit" class="col-md-3 col-form-label"><strong></strong></label>
+                            <label class="col-md-3 col-form-label"><strong></strong></label>
                             <div class="col-md-9">
-                                <button type="submit" class="btn btn-primary text-center">Update Profile</button>
+                                <div class="buttons mt-4"> 
+                                    <button type="submit" class="btn btn-primary mr-2">Update Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form action="/user/delete" method="post" id="deleteForm">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"><strong></strong></label>
+                            <div class="col-md-9">
+                                <div class="button mt-2">
+                                    <button type="button" class="btn btn-danger mr-2" id="deleteButton">Delete Account</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -112,5 +137,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("deleteButton").addEventListener("click", function() {
+        if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+            document.getElementById("deleteForm").submit();
+        }
+    });
+</script>
+
 </body>
 </html>
