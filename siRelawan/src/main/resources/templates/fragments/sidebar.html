@@ -8,7 +8,7 @@
     <!-- Sidebar Start -->
     <div th:fragment="sidebar(page)" class="sidebar pe-4 pb-3">
       <nav class="navbar bg-light navbar-light">
-        <a href="/" class="navbar-brand mx-4 mb-3">
+        <a href="/home" class="navbar-brand mx-4 mb-3">
           <h3 class="text-primary">SiRelawan</h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
@@ -24,8 +24,8 @@
             ></div>
           </div>
           <div class="ms-3">
-            <h6 class="mb-0">Admin Sirelawan</h6>
-            <span>Admin</span>
+            <h6 class="mb-0" th:text="${user.username}"></h6>
+            <span th:text="${user.role}"></span>
           </div>
         </div>
         <div class="navbar-nav w-100">
@@ -44,9 +44,8 @@
           <a href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
             ><i class="fas fa-user-alt"></i>Leaderboard</a
           >
-        </div>
-        <!-- Logout Button -->
-        <div class="navbar-nav w-100 mt-auto"> <!-- 'mt-auto' class added to push it to the bottom -->
+          <div style="margin: 180px 0;"></div>
+          <a href="/user/profile" class="nav-item nav-link" th:classappend="${page == 'profile' ? 'active' : ''}"><i class="fas fa-user-alt"></i>Profile Account</a>
           <a href="/logout" class="nav-item nav-link"><i class="fas fa-user-alt"></i>Log Out</a>
         </div>
       </nav>

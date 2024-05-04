@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -79,8 +80,8 @@ public class UserController {
             return "redirect:/home";
         } else {
             // Add error message and redirect back to login page
-            redirectAttributes.addFlashAttribute("error", "Incorrect username or password");
-            return "user/login";
+            redirectAttributes.addFlashAttribute("warning", "Incorrect username or password");
+            return "redirect:/login";
         }
     }
     
@@ -94,30 +95,91 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("user/update")
+    @PostMapping("/user/delete")
+    public String deleteAccount(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        HttpSession session = request.getSession();
+        String currentUsername = (String) session.getAttribute("currentUser");
+        
+        // Perform delete account operation
+        userService.deleteUser(currentUsername);
+        
+        // Invalidate the session to log out the user
+        session.invalidate();
+        
+        redirectAttributes.addFlashAttribute("success", "Your account has been successfully deleted.");
+        return "redirect:/login";
+    }
+    
+
+    @GetMapping("user/profile")
     public String formUpdate(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         String currentUsername = (String) session.getAttribute("currentUser");
         UserModel currentUserData = userService.getCurrentUser(currentUsername);
         model.addAttribute("accountData", currentUserData);
-        return "profileAccount";
+        return "user/profileAccount";
     }
 
-    @PostMapping("user/update")
-    public String updateAccount(@Valid @RequestBody UpdateUserRequestDTO updateUserRequestDTO, 
-                                HttpServletRequest request, 
+    @PostMapping("/user/profile")
+    public String updateAccount(@RequestParam(required = false) Long NIK,
+                                @RequestParam(required = false) Long NPWP,
+                                @RequestParam(required = false) Long noRekening,
+                                HttpServletRequest request,
                                 RedirectAttributes redirectAttributes, 
+                                UpdateUserRequestDTO updateUserRequestDTO,
                                 Model model) {
         HttpSession session = request.getSession();
         String currentUsername = (String) session.getAttribute("currentUser");
-        // Update user using UpdateUserRequestDTO
-        userService.updateUser(currentUsername, updateUserRequestDTO);
+
+        // Get current user data
         UserModel currentUserData = userService.getCurrentUser(currentUsername);
+        updateUserRequestDTO.setEmail(currentUserData.getEmail());
+        updateUserRequestDTO.setFullName(currentUserData.getFullName());
+        updateUserRequestDTO.setUsername(currentUserData.getUsername());
+        updateUserRequestDTO.setPassword(currentUserData.getPassword());
+        updateUserRequestDTO.setNomorWA(currentUserData.getNomorWA());
+
+        // Validate NIK, NPWP, and noRekening
+        boolean isValid = true;
+
+        if (NIK != null && NIK.toString().length() != 16) {
+            redirectAttributes.addFlashAttribute("warning", "NIK must be 16 digits long.");
+            isValid = false;
+        }
+
+        if (NPWP != null && NPWP.toString().length() != 15) {
+            redirectAttributes.addFlashAttribute("warning", "NPWP must be 15 digits long.");
+            isValid = false;
+        }
+
+        if (noRekening.toString().length() == 11 || noRekening.toString().length() == 14) {
+            redirectAttributes.addFlashAttribute("warning", "Bank account number cannot be 11 or 14 digits");
+            isValid = false;
+        }
+
+        if (noRekening != null && noRekening.toString().length() < 10 || noRekening.toString().length() > 16) {
+            redirectAttributes.addFlashAttribute("warning", "Bank account number must be 10 - 16 digits");
+            isValid = false;
+        }
+
+        // If any validation fails, redirect back to the profile page with warnings
+        if (!isValid) {
+            return "redirect:/user/profile";
+        }
+
+        // Update if all
+        updateUserRequestDTO.setNik(NIK);
+        updateUserRequestDTO.setNpwp(NPWP);
+        updateUserRequestDTO.setNoRekening(noRekening);
+        // Save the updated user data
+        userService.updateUser(currentUsername, updateUserRequestDTO);
 
         // Add the updated user data to the model
         model.addAttribute("accountData", currentUserData);
         redirectAttributes.addFlashAttribute("success", "Account Updated!");
-        // Return the view name
-        return "profileAccount";
+
+        // Redirect back to the profile page
+        return "redirect:/user/profile";
     }
+
 }

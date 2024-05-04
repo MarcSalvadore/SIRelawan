@@ -75,6 +75,20 @@ public class UserServiceImpl implements UserService {
          // Save the updated user back to the database
          userDb.save(user);
     }
+
+    @Override
+    public void deleteUser(String username) {
+        UserModel user = userDb.findByUsername(username);
+
+        // Check if the user exists
+        if (user != null) {
+            // Delete the user
+            userDb.delete(user);
+        } else {
+            // Handle the case where the user does not exist
+            throw new IllegalArgumentException("User not found with username: " + username);
+        }
+    }
     
     @Override
     public boolean authenticateUser(String username, String password) {
@@ -94,7 +108,10 @@ public class UserServiceImpl implements UserService {
         return user.getPoin();
     }
 
-    @Override
+    // @Override
+    // public String getToken(String username, String fullName) {
+    //     return jwtUtils.generateToken(username, fullName);
+    // }
     public UserModel getCurrentUser(String username) {
         UserModel user = userDb.findByUsername(username);
         return user;
