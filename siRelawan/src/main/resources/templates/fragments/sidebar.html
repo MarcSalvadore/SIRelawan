@@ -46,6 +46,9 @@
           >
           <div style="margin: 180px 0;"></div>
           <a href="/user/profile" class="nav-item nav-link" th:classappend="${page == 'profile' ? 'active' : ''}"><i class="fas fa-user-alt"></i>Profile Account</a>
+        </div>
+        <!-- Logout Button -->
+        <div class="navbar-nav w-100 mt-auto"> <!-- 'mt-auto' class added to push it to the bottom -->
           <a href="/logout" class="nav-item nav-link"><i class="fas fa-user-alt"></i>Log Out</a>
         </div>
       </nav>

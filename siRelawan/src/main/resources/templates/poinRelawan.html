@@ -36,33 +36,33 @@
 <nav th:replace="~{fragments/sidebar :: sidebar('leaderboard')}"></nav>
 <div class="content">
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
-    <div class="container-fluid pt-0 px-0">
-        <div class="bg-light rounded p-5">
-            <div class="card" style="display: inline-block;">
-                <div class="card-body">
-                    <p class="card-text" style="font-weight: bold;">Total Point Saya: <span th:text="${currentUserPoints}">0</span></p>
+    <div class="container">
+        <div class="card" style="display: inline-block;">
+            <div class="card-body">
+                <p class="card-text" style="font-weight: bold;">Total Point Saya: <span th:text="${currentUserPoints}">0</span></p>
+            </div>
+        </div>
+        <div class="container-fluid pt-4 px-4">
+            <div class="bg-light text-center rounded p-5">
+                <a href="/catalog/leaderboard"><span style="color: black;"><h3>Leaderboard</h3></span></a>
+                <div class="table-responsive rounded shadow">
+                    <table class="table text-center align-middle table-bordered table-hover mb-0 rounded">
+                        <thead>
+                            <tr class="text-dark">
+                                <th scope="col">Rank</th>
+                                <th scope="col">Nama Relawan</th>
+                                <th scope="col">Total Poin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user, index : ${users}" th:class="${user.username eq currentUsername} ? 'current-user' : ''">
+                                <td th:text="${index.index + 1}">...</td>
+                                <td th:text="${user.username}">Unknown</td>
+                                <td th:text="${user.poin}">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-            <div class="text-center">
-                <a><span style="color: black;"><h3>Leaderboard</h3></span></a>
-            </div>
-            <div class="table-responsive rounded shadow">
-                <table class="table text-center align-middle table-bordered table-hover mb-0 rounded">
-                    <thead>
-                        <tr class="text-dark">
-                            <th scope="col">Rank</th>
-                            <th scope="col">Nama Relawan</th>
-                            <th scope="col">Total Poin</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="user, index : ${users}" th:class="${user.username eq currentUsername} ? 'current-user' : ''">
-                            <td th:text="${index.index + 1}">...</td>
-                            <td th:text="${user.username}">Unknown</td>
-                            <td th:text="${user.poin}">0</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

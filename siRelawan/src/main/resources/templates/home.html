@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="h2 text-center">Welcome<span th:text="${username}"></span></h1>
+    </div>
+</body>
+
+</html>

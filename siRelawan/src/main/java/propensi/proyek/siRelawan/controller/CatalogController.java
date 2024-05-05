@@ -51,35 +51,51 @@ public class CatalogController {
     private UserService userService;
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        model.addAttribute("role", session.getAttribute("currentRole"));
         model.addAttribute("listCatalog", catalogService.getAllCatalog());
+
         return "index";
     }
 
     // @PreAuthorize("hasRole('SUPERADMIN')")
     @GetMapping("catalog/create")
-    public String formAddCatalog(Model model) {
-        // Membuat DTO baru sebagai isian form pengguna
-        var catalogDTO = new CreateCatalogRequestDTO();
+    public String formAddCatalog(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("ADMIN")) {
+            // Membuat DTO baru sebagai isian form pengguna
+            var catalogDTO = new CreateCatalogRequestDTO();
 
-        model.addAttribute("catalog", catalogDTO);
-        return "form";
+            model.addAttribute("catalog", catalogDTO);
+            return "form";
+        } else {
+            return "error/403";
+        }
+
     }
 
     @PostMapping("catalog/create")
-    public String addCatalog(@Valid @ModelAttribute CreateCatalogRequestDTO catalogDTO, Model model) {
+    public String addCatalog(@Valid @ModelAttribute CreateCatalogRequestDTO catalogDTO, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("ADMIN")) {
+            var catalog = catalogMapper.createCatalogRequestDTOToCatalog(catalogDTO);
+            // Memanggil Service Add
+            catalogService.createCatalog(catalog);
 
-        var catalog = catalogMapper.createCatalogRequestDTOToCatalog(catalogDTO);
-        // Memanggil Service Add
-        catalogService.createCatalog(catalog);
+            // Add variabel id catalog ke 'id' untuk dirender di thymeleaf
+            model.addAttribute("id", catalog.getId());
 
-        // Add variabel id catalog ke 'id' untuk dirender di thymeleaf
-        model.addAttribute("id", catalog.getId());
+            // Add variabel nama ke 'nama' untuk dirender di thymeleaf
+            model.addAttribute("nama", catalog.getNama());
 
-        // Add variabel nama ke 'nama' untuk dirender di thymeleaf
-        model.addAttribute("nama", catalog.getNama());
-
-        return "success-create-catalog";
+            return "success-create-catalog";
+        } else {
+            return "error/403";
+        }
     }
 
     private static boolean isNonEmpty(String value) {
@@ -92,62 +108,69 @@ public class CatalogController {
 
     // @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     @GetMapping("catalog/statistik")
-    public String statistikPage(Model model) {
-        List<Catalog> listCatalog = catalogService.getAllCatalog();
+    public String statistikPage(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("SUPERADMIN")) {
+            List<Catalog> listCatalog = catalogService.getAllCatalog();
 
-        int notStartedCount = 0;
-        int inProgressCount = 0;
-        int completedCount = 0;
+            int notStartedCount = 0;
+            int inProgressCount = 0;
+            int completedCount = 0;
 
-        for (Catalog catalog : listCatalog) {
-            switch (catalog.getStatus()) {
-                case NOT_STARTED:
-                    notStartedCount++;
-                    break;
-                case IN_PROGRESS:
-                    inProgressCount++;
-                    break;
-                case COMPLETED:
-                    completedCount++;
-                    break;
-            }
-        }
-
-        List<UserModel> listUser = userService.getAllUser();
-        int relawanCount = 0;
-        int dataCompleteCount = 0;
-        int dataNotCompleteCount = 0;
-
-        for (UserModel user : listUser) {
-            if (user.getRole().equals(EnumRole.RELAWAN)) {
-                relawanCount++;
+            for (Catalog catalog : listCatalog) {
+                switch (catalog.getStatus()) {
+                    case NOT_STARTED:
+                        notStartedCount++;
+                        break;
+                    case IN_PROGRESS:
+                        inProgressCount++;
+                        break;
+                    case COMPLETED:
+                        completedCount++;
+                        break;
+                }
             }
 
-            if (isNonEmpty(user.getNIK()) && isNonEmpty(user.getNPWP()) && isNonEmpty(user.getNoRekening())) {
-                dataCompleteCount++;
+            List<UserModel> listUser = userService.getAllUser();
+            int relawanCount = 0;
+            int dataCompleteCount = 0;
+            int dataNotCompleteCount = 0;
+
+            for (UserModel user : listUser) {
+                if (user.getRole().equals(EnumRole.RELAWAN)) {
+                    relawanCount++;
+                }
+
+                if (isNonEmpty(user.getNIK()) && isNonEmpty(user.getNPWP()) && isNonEmpty(user.getNoRekening())) {
+                    dataCompleteCount++;
+                }
+
             }
 
-        }
+            if (dataCompleteCount >= relawanCount) {
+                dataNotCompleteCount = dataCompleteCount - relawanCount;
+            } else {
+                dataNotCompleteCount = relawanCount - dataCompleteCount;
+            }
 
-        if (dataCompleteCount >= relawanCount) {
-            dataNotCompleteCount = dataCompleteCount - relawanCount;
+            model.addAttribute("notStartedCount", notStartedCount);
+            model.addAttribute("inProgressCount", inProgressCount);
+            model.addAttribute("completedCount", completedCount);
+
+            model.addAttribute("relawanCount", relawanCount);
+            model.addAttribute("dataCompleteCount", dataCompleteCount);
+            model.addAttribute("dataNotCompleteCount", dataNotCompleteCount);
+
+            return "statistik";
         } else {
-            dataNotCompleteCount = relawanCount - dataCompleteCount;
+            return "error/403";
         }
-
-        model.addAttribute("notStartedCount", notStartedCount);
-        model.addAttribute("inProgressCount", inProgressCount);
-        model.addAttribute("completedCount", completedCount);
-
-        model.addAttribute("relawanCount", relawanCount);
-        model.addAttribute("dataCompleteCount", dataCompleteCount);
-        model.addAttribute("dataNotCompleteCount", dataNotCompleteCount);
-
-        return "statistik";
     }
 
     @GetMapping("catalog/detail-program/{id}")
-    public String detailProgram(@PathVariable String id, Model model) {
+    public String detailProgram(@PathVariable String id, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
         Catalog catalog = catalogService.getCatalogById(id);
         String status = "";
 
@@ -160,48 +183,72 @@ public class CatalogController {
         }
         model.addAttribute("program", catalog);
         model.addAttribute("status", status);
+        model.addAttribute("role", session.getAttribute("currentRole"));
         return "catalog/detail-program";
     }
 
     // @PreAuthorize("hasRole('SUPERADMIN')")
     @GetMapping("catalog/edit-program/{id}")
-    public String formUpdateProgram(@PathVariable String id, Model model) {
-        Catalog catalog = catalogService.getCatalogById(id);
-        String status = String.valueOf(catalog.getStatus());
+    public String formUpdateProgram(@PathVariable String id, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("ADMIN")) {
+            Catalog catalog = catalogService.getCatalogById(id);
+            String status = String.valueOf(catalog.getStatus());
 
-        model.addAttribute("program", catalog);
-        model.addAttribute("status", status);
-        return "catalog/edit-program";
+            model.addAttribute("program", catalog);
+            model.addAttribute("status", status);
+            return "catalog/edit-program";
+        } else {
+            return "error/403";
+        }
     }
 
     @PostMapping("catalog/edit-program")
-    public String updateProgram(@ModelAttribute Catalog catalog, Model model) {
-        Catalog updatedCatalog = catalogService.updateCatalog(catalog);
+    public String updateProgram(@ModelAttribute Catalog catalog, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("ADMIN")) {
+            Catalog updatedCatalog = catalogService.updateCatalog(catalog);
 
-        model.addAttribute("id", catalog.getId());
-        return "catalog/edit-program-sukses.html";
+            model.addAttribute("id", catalog.getId());
+            return "catalog/edit-program-sukses.html";
+        } else {
+            return "error/403";
+        }
     }
 
     @PostMapping("catalog/delete-program/{id}")
-    public String deleteProgram(@PathVariable String id, Model model) {
-        catalogService.deleteCatalogById(id);
-        return "redirect:/home";
+    public String deleteProgram(@PathVariable String id, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("ADMIN")) {
+            catalogService.deleteCatalogById(id);
+            return "redirect:/home";
+        } else {
+            return "error/403";
+        }
     }
 
     @GetMapping("catalog/leaderboard")
     public String showLeaderboard(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         String currentUsername = (String) session.getAttribute("currentUser");
-        int currentUserPoint = userService.getUserPoint(currentUsername);
-        // Memasukkan data dari user yang login
-        model.addAttribute("currentUsername", currentUsername);
-        model.addAttribute("currentUserPoints", currentUserPoint);
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("SUPERADMIN") || role.equals("RELAWAN")) {
+            int currentUserPoint = userService.getUserPoint(currentUsername);
+            // Memasukkan data dari user yang login
+            model.addAttribute("currentUsername", currentUsername);
+            model.addAttribute("currentUserPoints", currentUserPoint);
 
-        List<UserModel> users = userService.getAllUser();
-        // Mengurutkan user dengan poin tertinggi ke terendah
-        Collections.sort(users, Comparator.comparingInt(UserModel::getPoin).reversed());
-        model.addAttribute("users", users);
-        return "poinRelawan";
+            List<UserModel> users = userService.getAllUser();
+            // Mengurutkan user dengan poin tertinggi ke terendah
+            Collections.sort(users, Comparator.comparingInt(UserModel::getPoin).reversed());
+            model.addAttribute("users", users);
+            return "poinRelawan";
+        } else {
+            return "error/403";
+        }
     }
 
     @GetMapping("/catalog/addpoint")
@@ -237,5 +284,4 @@ public class CatalogController {
         }
         return modelAndView;
     }
-
 }
