@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -76,6 +77,7 @@ public class UserController {
             HttpSession session = request.getSession();
             // Store current user in session
             session.setAttribute("currentUser", loginRequest.getUsername());
+            session.setAttribute("currentRole", userService.getCurrentUser(loginRequest.getUsername()).getRole().toString());
             redirectAttributes.addFlashAttribute("success", "Login Successful!");
             return "redirect:/home";
         } else {
@@ -181,5 +183,4 @@ public class UserController {
         // Redirect back to the profile page
         return "redirect:/user/profile";
     }
-
 }
