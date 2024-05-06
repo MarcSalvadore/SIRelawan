@@ -25,6 +25,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
             integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   </head>
 
   <body>
@@ -55,7 +56,7 @@
         <!-- Navbar End -->
 
         <!-- Sale & Revenue Start -->
-        <div class="container-fluid pt-4 px-4">
+        <div th:if="${role == 'SUPERADMIN'}" class="container-fluid pt-4 px-4">
           <div class="row g-4">
             <div
               class="btn btn-link col-sm-6 col-xl-3"
@@ -88,9 +89,11 @@
           <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
               <h6 class="mb-0">Program sosial terbaru</h6>
-              <a href="/catalog/create"
-                >Tambah program sosial baru</a
-              >
+              <div th:if="${role == 'ADMIN'}">
+                <a href="/catalog/create"
+                  ><i class="fa-solid fa-plus"></i>Tambah program sosial baru</a
+                >
+              </div>
             </div>
             <div class="table-responsive">
               <table
