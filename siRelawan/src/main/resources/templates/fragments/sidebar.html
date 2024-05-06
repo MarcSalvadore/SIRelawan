@@ -44,6 +44,11 @@
           <a href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
             ><i class="fas fa-user-alt"></i>Leaderboard</a
           >
+
+          <a href="#" class="nav-item nav-link" th:classappend="${page == 'submission' ? 'active' : ''}">
+            <i class="fas fa-upload me-2"></i>Submission
+          </a>
+
           <div style="margin: 180px 0;"></div>
           <a href="/user/profile" class="nav-item nav-link" th:classappend="${page == 'profile' ? 'active' : ''}"><i class="fas fa-user-alt"></i>Profile Account</a>
         </div>

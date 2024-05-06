@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Submisi Penawaran</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <style>
+        input:read-only {
+            background-color: #f2f2f2; /* Light gray background color */
+            border-color: #ccc; /* Light gray border color */
+            color: #333; /* Text color */
+            cursor: not-allowed; /* Indicates that the field cannot be edited */
+        }
+        .buttons {
+            width: 200px;
+            margin: 0 auto;
+            display: inline;
+        }
+        .action_btn {
+            width: 200px;
+            margin: 0 auto;
+            display: inline;
+        }
+    </style>
+    <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="~{fragments/sidebar :: sidebar('submission')}"></nav>
+<div class="content">
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Submisi Penawaran</h6>
+            </div>
+            <div class="table-responsive">
+                <table
+                        class="table text-start align-middle table-bordered table-hover mb-0"
+                >
+                    <thead>
+                    <tr class="text-dark">
+                        <th scope="col">Nomor</th>
+                        <th scope="col">Invoice</th>
+                        <th scope="col">Tanggal Bayar</th>
+                        <th scope="col">Jumlah</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+<!--                        tr here-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
