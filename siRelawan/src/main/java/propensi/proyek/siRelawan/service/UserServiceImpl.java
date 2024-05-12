@@ -108,10 +108,7 @@ public class UserServiceImpl implements UserService {
         return user.getPoin();
     }
 
-    // @Override
-    // public String getToken(String username, String fullName) {
-    //     return jwtUtils.generateToken(username, fullName);
-    // }
+    @Override
     public UserModel getCurrentUser(String username) {
         UserModel user = userDb.findByUsername(username);
         return user;

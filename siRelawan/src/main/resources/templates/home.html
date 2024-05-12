@@ -10,69 +10,8 @@
 </head>
 
 <body>
-    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <div class="container">
-        <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
-        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
-        <div class="text-center pt-5">
-            <form th:action="@{/catalog/search}" method="get" class="form-inline my-2 my-lg-0 d-flex">
-                <input name="productName" class="form-control ms-3" type="search" placeholder="Search Product" aria-label="Search">
-                <button class="btn btn-dark text-light ms-3" type="submit">Search</button>
-            </form>
-            <a type="button" class="btn btn-primary m-2" th:if="${username != null}" href="/add-product">Add Product</a>
-        </div>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <!-- Iterate over the listCatalog -->
-            <div th:each="catalog : ${listCatalog}">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${catalog.productName}"></h5>
-                            <img th:src="${imageLink} + ${catalog.id}" alt="">
-                            <!-- <p class="card-text" th:text="'Seller: ' + ${catalog.seller}"></p> -->
-                            <p class="card-text" th:text="'Price: ' + ${catalog.price}"></p>
-                            <!-- <p class="card-text" th:text="${catalog.productDescription}"></p>
-                            <p class="card-text">Category: Category</p>
-                            <p class="card-text" th:text="'Stock: ' + ${catalog.stock}"></p> -->
-                            <!-- <p class="card-text" th:text="'Image: ' + ${catalog.image}"></p> -->
-                            <a type="button" class="btn btn-warning"
-                            th:if="${username != null}" th:href="@{/update-product/{idCatalog}(idCatalog=${catalog.id})}">Edit</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br><br>
-
-        <!-- Dummy Data for Bar Chart -->
-        <canvas id="barChart"></canvas>
-        <script>
-            var ctx = document.getElementById('barChart').getContext('2d');
-            var barChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Iphone 15', 'Sepatu skena', 'Laptop', 'Jam', 'Mouse'],
-                    datasets: [{
-                        label: 'Top 5 Products Sold',
-                        data: [10, 8, 15, 12, 20],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        x: {
-                            type: 'category',
-                            labels: ['Iphone 15', 'Sepatu skena', 'Laptop', 'Jam', 'Mouse']
-                        },
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        </script>
+        <h1 class="h2 text-center">Welcome<span th:text="${username}"></span></h1>
     </div>
 </body>
 

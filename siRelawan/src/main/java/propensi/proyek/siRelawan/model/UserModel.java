@@ -1,5 +1,7 @@
 package propensi.proyek.siRelawan.model;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -8,10 +10,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Inheritance
+@Builder
 @Table(name = "users")
 public class UserModel {
     @Id
@@ -59,6 +64,9 @@ public class UserModel {
     @NotNull
     @Column(name = "poin", nullable = false)
     private int poin = 0;
+
+    @ManyToMany(mappedBy = "user")
+    private Set<ProgramUser> programUsers = new HashSet<>();
 
     // 3 Variabel tambahan untuk melengkapi profile user (Not included in registration)
     @Column(name = "nik")
