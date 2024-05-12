@@ -51,16 +51,16 @@
             </div>
             <div class="row">
                 <div class="card" style="width: 30%">
-                    <h2>Belum Dimulai</h2>
-                    <p th:text="${notStartedCount}"></p>
+                    <h4>Belum Dimulai</h4>
+                    <p th:text="${notStartedCount}" style="font-size: 36px;"></p>
                 </div>
                 <div class="card" style="width: 30%">
-                    <h2>Sedang Dikerjakan</h2>
-                    <p th:text="${inProgressCount}"></p>
+                    <h4>Sedang Dikerjakan</h4>
+                    <p th:text="${inProgressCount}" style="font-size: 36px;"></p>
                 </div>
                 <div class="card" style="width: 30%">
-                    <h2>Selesai</h2>
-                    <p th:text="${completedCount}"></p>
+                    <h4>Selesai</h4>
+                    <p th:text="${completedCount}" style="font-size: 36px;"></p>
                 </div>
             </div>
         </div>
@@ -80,16 +80,16 @@
             </div>
             <div class="row">
                 <div class="card" style="width: 30%">
-                    <h2>Jumlah Relawan Terdaftar</h2>
-                    <p th:text="${relawanCount}"></p>
+                    <h4>Jumlah Relawan Terdaftar</h4>
+                    <p th:text="${relawanCount}" style="font-size: 36px;"></p>
                 </div>
                 <div class="card" style="width: 30%">
-                    <h2>Relawan yang Sudah Melengkapi Data Diri</h2>
-                    <p th:text="${dataCompleteCount}"></p>
+                    <h4>Relawan yang Sudah Melengkapi Data Diri</h4>
+                    <p th:text="${dataCompleteCount}" style="font-size: 36px;"></p>
                 </div>
                 <div class="card" style="width: 30%">
-                    <h2>Relawan yang Belum Melengkapi Data Diri</h2>
-                    <p th:text="${dataNotCompleteCount}"></p>
+                    <h4>Relawan yang Belum Melengkapi Data Diri</h4>
+                    <p th:text="${dataNotCompleteCount}" style="font-size: 36px;"></p>
                 </div>
             </div>
         </div>
@@ -111,7 +111,6 @@
 
     var dataCompleteCount = [[${dataCompleteCount}]];
     var dataNotCompleteCount = [[${dataNotCompleteCount}]];
-
 
     var pieChartData = {
         labels: ["Belum dimulai", "Sedang dikerjakan", "Selesai"],
