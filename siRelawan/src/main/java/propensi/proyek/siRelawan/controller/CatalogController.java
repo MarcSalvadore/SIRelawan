@@ -243,7 +243,8 @@ public class CatalogController {
             // Memasukkan data dari user yang login
             model.addAttribute("currentUsername", currentUsername);
             model.addAttribute("currentUserPoints", currentUserPoint);
-
+        }
+        
         List<UserModel> users = userService.getAllUser();
         // Mengurutkan user dengan poin tertinggi ke terendah
         Collections.sort(users, Comparator.comparingInt(UserModel::getPoin).reversed());
