@@ -91,11 +91,6 @@ public class CatalogController {
 
             // Add variabel id catalog ke 'id' untuk dirender di thymeleaf
             model.addAttribute("id", catalog.getId());
-            // Add variabel id catalog ke 'id' untuk dirender di thymeleaf
-            model.addAttribute("id", catalog.getId());
-
-            // Add variabel nama ke 'nama' untuk dirender di thymeleaf
-            model.addAttribute("nama", catalog.getNama());
             // Add variabel nama ke 'nama' untuk dirender di thymeleaf
             model.addAttribute("nama", catalog.getNama());
 
