@@ -16,7 +16,7 @@ public class Submission {
     private Date tanggalBayar;
     private double jumlah;
     private boolean status;
-
+    private String imageFileName;
     @Column(columnDefinition = "TEXT")
     private String description;
 
@@ -66,5 +66,13 @@ public class Submission {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 }

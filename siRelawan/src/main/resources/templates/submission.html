@@ -52,11 +52,22 @@
                         <th scope="col">Tanggal Bayar</th>
                         <th scope="col">Jumlah</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Image</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-<!--                        tr here-->
+                    <tr th:each="submission : ${submissions}">
+                        <td th:text="${submission.id}"></td>
+                        <td th:text="${submission.invoice}"></td>
+                        <td th:text="${submission.tanggalBayar}"></td>
+                        <td th:text="${submission.jumlah}"></td>
+                        <td th:text="${submission.status}"></td>
+                        <td>
+                           <img th:src="@{'/img/' + ${submission.imageFileName}}" alt="..." width="100">
+                        </td>
+                        <td th:text="action"></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
