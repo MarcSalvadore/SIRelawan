@@ -51,7 +51,12 @@ public class CatalogController {
     private UserService userService;
 
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String currentUsername = (String) session.getAttribute("currentUser");
+
+        // Memasukkan data dari user yang login
+        model.addAttribute("currentUsername", currentUsername);
         model.addAttribute("listCatalog", catalogService.getAllCatalog());
         return "index";
     }
@@ -203,6 +208,13 @@ public class CatalogController {
         model.addAttribute("users", users);
         return "poinRelawan";
     }
+
+    @GetMapping("catalog/target-program")
+    public String targetProgram(Model model) {
+        model.addAttribute("programs", catalogService.getAllCatalog());
+        return "target-program";
+    }
+
 
     @GetMapping("/catalog/addpoint")
     public String showAddPointsForm() {

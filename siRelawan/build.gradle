@@ -4,8 +4,6 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
-// ext['spring.version']='6.1.5'
-
 group = 'propensi.proyek'
 version = '0.0.1-SNAPSHOT'
 
@@ -18,7 +16,6 @@ repositories {
 }
 
 dependencies {
-	// implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -34,22 +31,13 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-	// Security dependency
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	//  Temporary explicit version to fix Thymeleaf bug
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // Other Spring Security modules you might need
-    // implementation 'org.springframework.security:spring-security-web:5.5.0'
-    // implementation 'org.springframework.security:spring-security-config:5.5.0'
-    // implementation 'org.springframework.security:spring-security-oauth2-client:5.5.0'
-    // implementation 'org.springframework.security:spring-security-oauth2-jose:5.5.0'
-    // implementation 'org.springframework.security:spring-security-oauth2-resource-server:5.5.0'
-	// End of Spring security dependency
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation 'org.mapstruct:mapstruct:1.5.0.Final' // Use the latest version available
+	implementation 'org.mapstruct:mapstruct:1.5.0.Final' 
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.0.Final'
 	implementation 'org.yaml:snakeyaml:2.2'
 }

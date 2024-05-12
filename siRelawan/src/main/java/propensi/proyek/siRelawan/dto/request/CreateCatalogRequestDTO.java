@@ -1,5 +1,6 @@
 package propensi.proyek.siRelawan.dto.request;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,4 +13,8 @@ public class CreateCatalogRequestDTO {
     private java.sql.Date tanggalMulai;
     private String deskripsi;
     private String status;
+    private Long targetDana;
+    private String websiteURL;
+    private String campaignSource = "relawan";
+    private String campaignMedium = "link";
 }
