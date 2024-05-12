@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Create Submisi</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <style>
+        input:read-only {
+            background-color: #f2f2f2; /* Light gray background color */
+            border-color: #ccc; /* Light gray border color */
+            color: #333; /* Text color */
+            cursor: not-allowed; /* Indicates that the field cannot be edited */
+        }
+        .buttons {
+            width: 200px;
+            margin: 0 auto;
+            display: inline;
+        }
+        .action_btn {
+            width: 200px;
+            margin: 0 auto;
+            display: inline;
+        }
+    </style>
+    <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="~{fragments/sidebar :: sidebar('submission')}"></nav>
+<div class="content">
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container-fluid pt-4 px-4">
+<!--        start-->
+        <div class="row">
+            <div class="col-md-8 mx-auto rounded border p-4 m-4">
+                <h2 class="text-center mb-5">Submisi Penawaran Baru</h2>
+
+                <form method="post" enctype="multipart/form-data" th:object="${submissionDto}">
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Invoice Name</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${submissionDto.invoice}">
+                            <p th:if="${#fields.hasErrors('invoice')}" th:errorclass="text-danger"
+                                th:errors="${submissionDto.invoice}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Description</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" th:field="${submissionDto.description}">
+                            <p th:if="${#fields.hasErrors('description')}" th:errorclass="text-danger"
+                               th:errors="${submissionDto.description}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Jumlah</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="number" step="0.01" min="0"
+                                   th:field="${submissionDto.jumlah}">
+                            <p th:if="${#fields.hasErrors('jumlah')}" th:errorclass="text-danger"
+                               th:errors="${submissionDto.jumlah}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Image</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="file"
+                                   th:field="${submissionDto.imageFile}">
+                            <p th:if="${#fields.hasErrors('imageFile')}" th:errorclass="text-danger"
+                               th:errors="${submissionDto.imageFile}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="offset-sm-4 col-sm-4 d-grid">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class="col-sm-4 d-grid">
+                            <a class="btn btn-outline-primary" href="/submission" role="button">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

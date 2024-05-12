@@ -15,7 +15,7 @@ public class Submission {
     private String invoice;
     private Date tanggalBayar;
     private double jumlah;
-    private boolean status;
+    private boolean status = false;
     private String imageFileName;
     @Column(columnDefinition = "TEXT")
     private String description;
