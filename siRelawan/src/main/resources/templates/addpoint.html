@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Manajemen Poin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    
+    <style>
+        .table-responsive.rounded {
+            border-radius: 300px; /* Adjust the value as needed */
+            overflow: hidden; /* Clip content that overflows rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Blur shadow */
+        }
+        
+        .table-bordered.rounded th,
+        .table-bordered.rounded td {
+            border: none;
+        }
+        
+        /* Add hover effect */
+        .table-bordered.rounded tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        /* Highlight current user's row */
+        .current-user {
+            background-color: #12c250; /* Change the background color as desired */
+        }
+    </style>
+    <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="~{fragments/sidebar :: sidebar('leaderboard')}"></nav>
+<div class="content">
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container">
+        <div class="card" style="display: inline-block;">
+            <h1>Add Points to User</h1>
+            <form action="/catalog/addpoint" method="post">
+                <label for="points">Enter points to add:</label>
+                <input type="number" id="points" name="points" required>
+                <button type="submit">Add Points</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

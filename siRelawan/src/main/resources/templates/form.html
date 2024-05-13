@@ -68,18 +68,49 @@
                     th:field="*{deskripsi}"
                   />
                   <br /><br />
+                  Target Dana : <br />
+                  <input
+                    class="form-control"
+                    type="number"
+                    name="targetDana"
+                    th:field="*{targetDana}"
+                  />
+                  <br /><br />
                   Status Kegiatan Sosial : <br />
+                  <select class="form-select" name="status">
+                    <option value="NOT_STARTED">Belum dimulai</option>
+                    <option value="IN_PROGRESS">Sedang dikerjakan</option>
+                    <option value="COMPLETED">Selesai</option>
+                  </select>
+                  <br /><br />
+                  Website URL : <br />
                   <input
                     class="form-control"
                     type="text"
                     name="status"
-                    th:field="*{status}"
+                    th:field="*{websiteURL}"
                   />
+                  <br /><br />
+                  Campaign Source : <br />
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="status"
+                    th:field="*{campaignSource}"
+                  readonly/>
+                  <br /><br />
+                  Campaign Medium : <br />
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="status"
+                    th:field="*{campaignMedium}"
+                  readonly/>
                   <br /><br />
 
                   <div class="text-center">
-                    <a th:href="@{/}" class="mx-2 btn btn-danger">Batal</a>
-                    <button class="mx-2 btn btn-primary">Simpan</button>
+                    <a th:href="@{/home}" class="mx-2 btn btn-danger">Batal</a>
+                    <button type="submit" class="mx-2 btn btn-primary">Simpan</button>
                   </div>
                 </form>
               </div>

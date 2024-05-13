@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Manajemen Poin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    
+    <style>
+        /* Set the table's width */
+        .table-responsive.rounded {
+            border-radius: 300px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-bordered.rounded th,
+        .table-bordered.rounded td {
+            border: none;
+        }
+
+        /* Add hover effect */
+        .table-bordered.rounded tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Highlight current user's row */
+        .current-user {
+            background-color: #12c250; /* Change the background color as desired */
+        }
+    </style>
+    <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="~{fragments/sidebar :: sidebar('leaderboard')}"></nav>
+<div class="content">
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container-fluid pt-0 px-0">
+        <div class="bg-light rounded p-5">
+            <div class="card" style="display: inline-block;">
+                <div class="card-body">
+                    <p class="card-text" style="font-weight: bold;">Total Point Saya: <span th:text="${currentUserPoints}">0</span></p>
+                </div>
+            </div>
+            <div class="text-center">
+                <a><span style="color: black;"><h3>Leaderboard</h3></span></a>
+            </div>
+            <div class="table-responsive rounded shadow">
+                <table class="table text-center align-middle table-bordered table-hover mb-0 rounded">
+                    <thead>
+                        <tr class="text-dark">
+                            <th scope="col">Rank</th>
+                            <th scope="col">Nama Relawan</th>
+                            <th scope="col">Total Poin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user, index : ${users}" th:class="${user.username eq currentUsername} ? 'current-user' : ''">
+                            <td th:text="${index.index + 1}">...</td>
+                            <td th:text="${user.username}">Unknown</td>
+                            <td th:text="${user.poin}">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

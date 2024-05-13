@@ -1,16 +1,18 @@
 package propensi.proyek.siRelawan.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import propensi.proyek.siRelawan.dto.request.CreateUserRequestDTO;
+import propensi.proyek.siRelawan.dto.request.UpdateUserRequestDTO;
 import propensi.proyek.siRelawan.dto.response.CreateUserResponseDTO;
 import propensi.proyek.siRelawan.model.EnumRole;
 import propensi.proyek.siRelawan.model.UserModel;
 import propensi.proyek.siRelawan.repository.UserDb;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDb userDb;
-
+    
     // @Autowired
     // PasswordEncoder passwordEncoder;
     
@@ -47,7 +49,47 @@ public class UserServiceImpl implements UserService {
 
         userDb.save(newUser);
     }
+    
+    @Override
+    public void accumulatePoin(String username, int poin) {
+        UserModel user = userDb.findByUsername(username);
+        int newPoin = user.getPoin() + poin;
+        user.setPoin(newPoin);
+        userDb.save(user);
+    }
 
+    @Override
+    public void updateUser(String username, UpdateUserRequestDTO updateUserRequestDTO) {
+         // Retrieve the user from the database using the username
+         UserModel user = userDb.findByUsername(username);
+
+         // Update the user with the new data
+         user.setFullName(updateUserRequestDTO.getFullName());
+         user.setPassword(updateUserRequestDTO.getPassword());
+         user.setEmail(updateUserRequestDTO.getEmail());
+         user.setNomorWA(updateUserRequestDTO.getNomorWA());
+         user.setNIK(updateUserRequestDTO.getNik());
+         user.setNPWP(updateUserRequestDTO.getNpwp());
+         user.setNoRekening(updateUserRequestDTO.getNoRekening());
+ 
+         // Save the updated user back to the database
+         userDb.save(user);
+    }
+
+    @Override
+    public void deleteUser(String username) {
+        UserModel user = userDb.findByUsername(username);
+
+        // Check if the user exists
+        if (user != null) {
+            // Delete the user
+            userDb.delete(user);
+        } else {
+            // Handle the case where the user does not exist
+            throw new IllegalArgumentException("User not found with username: " + username);
+        }
+    }
+    
     @Override
     public boolean authenticateUser(String username, String password) {
         UserModel user = userDb.findByUsername(username);
@@ -59,31 +101,24 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
-    
-    @Override
-    public String getUsername(String username) {
-        UserModel user = userDb.findByUsername(username);
-        return user.getUsername();
-    }
 
     @Override
-    public List<UserModel> getAllUser() {
-        return userDb.findAll();
+    public int getUserPoint(String username) {
+        UserModel user = userDb.findByUsername(username);
+        return user.getPoin();
     }
 
     // @Override
     // public String getToken(String username, String fullName) {
     //     return jwtUtils.generateToken(username, fullName);
     // }
+    public UserModel getCurrentUser(String username) {
+        UserModel user = userDb.findByUsername(username);
+        return user;
+    }
 
-    // @Override
-    // public UUID getUserIdFromToken(String token) {
-    //     String username = getUsernameFromToken(token);
-    //     return userDb.findByUsername(username).getId();
-    // }
-
-    // @Override
-    // public String getUsernameFromToken(String token) {
-    //     return jwtUtils.extractUsername(token);
-    // }
+    @Override
+    public List<UserModel> getAllUser() {
+        return userDb.findAll();
+    }
 }

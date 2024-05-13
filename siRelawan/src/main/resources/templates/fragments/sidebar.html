@@ -8,7 +8,7 @@
     <!-- Sidebar Start -->
     <div th:fragment="sidebar(page)" class="sidebar pe-4 pb-3">
       <nav class="navbar bg-light navbar-light">
-        <a href="/" class="navbar-brand mx-4 mb-3">
+        <a href="/home" class="navbar-brand mx-4 mb-3">
           <h3 class="text-primary">SiRelawan</h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
@@ -24,12 +24,12 @@
             ></div>
           </div>
           <div class="ms-3">
-            <h6 class="mb-0">Admin Sirelawan</h6>
-            <span>Admin</span>
+            <h6 class="mb-0" th:text="${user.username}"></h6>
+            <span th:text="${user.role}"></span>
           </div>
         </div>
         <div class="navbar-nav w-100">
-          <a href="/" class="nav-item nav-link" th:classappend="${page == 'home' ? 'active' : ''}"
+          <a href="/home" class="nav-item nav-link" th:classappend="${page == 'index' ? 'active' : ''}"
             ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a
           >
 
@@ -40,6 +40,22 @@
           <a href="/catalog/statistik" class="nav-item nav-link" th:classappend="${page == 'statistik' ? 'active' : ''}"
             ><i class="fas fa-chart-bar"></i>Statistik</a
           >
+
+          <a href="/catalog/target-program" class="nav-item nav-link" th:classappend="${page == 'target-program' ? 'active' : ''}"
+            ><i class="fas fa-file-alt"></i>Target Program</a
+          >
+
+          <a href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
+            ><i class="fas fa-user-alt"></i>Leaderboard</a
+          >
+
+          <a href="/submission" class="nav-item nav-link" th:classappend="${page == 'submission' ? 'active' : ''}">
+            <i class="fas fa-upload me-2"></i>Submission
+          </a>
+
+          <div style="margin: 120px;"></div>
+          <a href="/user/profile" class="nav-item nav-link" th:classappend="${page == 'profile' ? 'active' : ''}"><i class="fas fa-user-alt"></i>Profile Account</a>
+          <a href="/logout" class="nav-item nav-link"><i class="fas fa-user-alt"></i>Log Out</a>
         </div>
       </nav>
     </div>
