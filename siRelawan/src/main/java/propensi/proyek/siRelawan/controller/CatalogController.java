@@ -53,8 +53,10 @@ public class CatalogController {
     @GetMapping("/home")
     public String home(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
+        String currentUsername = (String) session.getAttribute("currentUser");
 
-        model.addAttribute("role", session.getAttribute("currentRole"));
+        // Memasukkan data dari user yang login
+        model.addAttribute("currentUsername", currentUsername);
         model.addAttribute("listCatalog", catalogService.getAllCatalog());
 
         return "index";
@@ -250,6 +252,13 @@ public class CatalogController {
             return "error/403";
         }
     }
+
+    @GetMapping("catalog/target-program")
+    public String targetProgram(Model model) {
+        model.addAttribute("programs", catalogService.getAllCatalog());
+        return "target-program";
+    }
+
 
     @GetMapping("/catalog/addpoint")
     public String showAddPointsForm() {

@@ -41,6 +41,10 @@
             ><i class="fas fa-chart-bar"></i>Statistik</a
           >
 
+          <a href="/catalog/target-program" class="nav-item nav-link" th:classappend="${page == 'target-program' ? 'active' : ''}"
+            ><i class="fas fa-file-alt"></i>Target Program</a
+          >
+
           <a href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
             ><i class="fas fa-user-alt"></i>Leaderboard</a
           >
@@ -49,7 +53,7 @@
             <i class="fas fa-upload me-2"></i>Submission
           </a>
 
-          <div style="margin: 180px 0;"></div>
+          <div style="margin: 120px;"></div>
           <a href="/user/profile" class="nav-item nav-link" th:classappend="${page == 'profile' ? 'active' : ''}"><i class="fas fa-user-alt"></i>Profile Account</a>
         </div>
         <!-- Logout Button -->

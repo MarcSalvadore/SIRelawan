@@ -106,6 +106,7 @@
                     <th scope="col">Deskripsi</th>
                     <th scope="col">Status</th>
                     <th scope="col">Detail</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -116,6 +117,9 @@
                     <td th:text="${catalog.status}"></td>
                     <td>
                       <a class="btn btn-sm btn-primary" th:href="@{/catalog/detail-program/} + ${catalog.id}">Detail</a>
+                    </td>
+                    <td>
+                      <a class="btn btn-sm btn-primary joinButton">Join</a>
                     </td>
                   </tr>
                 </tbody>
@@ -148,6 +152,23 @@
         ><i class="bi bi-arrow-up"></i
       ></a>
     </div>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var listCatalog = /*[[${listCatalog}]]*/ [];
+      var currentUsername = /*[[${currentUsername}]]*/ {};
+  
+      document.querySelectorAll(".joinButton").forEach(function(button, index) {
+          button.addEventListener("click", function() {
+              var link = listCatalog[index].websiteURL + "?utm_source=" + listCatalog[index].campaignSource + "&utm_medium=" + listCatalog[index].campaignMedium + "&utm_campaign=" + currentUsername;
+              if (confirm("Berikut Link Unik Anda untuk Menawarkan " + listCatalog[index].nama + " : " + link + ". Apakah Anda ingin membuka tautan tersebut sekarang?")) {
+                  window.open(link, "_blank");
+              }
+          });
+      });
+      /*]]>*/
+    </script>
+  
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
