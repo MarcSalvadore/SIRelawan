@@ -8,4 +8,6 @@ public interface SubmissionService {
     List<Submission> getAllSubmission();
 
     List<Submission> sortSubmission();
+
+    void createSubmission(Submission submission);
 }

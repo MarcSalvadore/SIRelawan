@@ -60,7 +60,8 @@ public class SubmissionController {
         String storageNameFile = tanggalBayar.getTime() + "_" + image.getOriginalFilename();
 
         try {
-            String uploadDir = "resources/static/img/";
+//            String uploadDir = "resources/static/img/";
+            String uploadDir = "siRelawan/src/main/resources/static/img/";
             Path uploadPath = Paths.get(uploadDir);
 
             if (!Files.exists(uploadPath)) {
@@ -83,7 +84,7 @@ public class SubmissionController {
         submission.setImageFileName(storageNameFile);
         submission.setTanggalBayar(tanggalBayar);
         submission.setStatus(false);
-
+        submissionService.createSubmission(submission);
 
         return "redirect:/submission";
     }

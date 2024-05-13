@@ -53,20 +53,18 @@
                         <th scope="col">Jumlah</th>
                         <th scope="col">Status</th>
                         <th scope="col">Image</th>
-                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="submission : ${submissions}">
                         <td th:text="${submission.id}"></td>
                         <td th:text="${submission.invoice}"></td>
-                        <td th:text="${submission.tanggalBayar}"></td>
-                        <td th:text="${submission.jumlah}"></td>
-                        <td th:text="${submission.status}"></td>
+                        <td th:text="${#dates.format(submission.tanggalBayar, 'dd-MMM-yyyy')}"></td>
+                        <td th:text="'Rp. ' + ${submission.jumlah}"></td>
+                        <td th:text="${submission.status ? 'Terkonfirmasi' : 'Belum Dikonfirm'}"></td>
                         <td>
                            <img th:src="@{'/img/' + ${submission.imageFileName}}" alt="..." width="100">
                         </td>
-                        <td th:text="action"></td>
                     </tr>
                     </tbody>
                 </table>
