@@ -30,6 +30,7 @@ import lombok.Setter;
 @Table(name = "users")
 public class UserModel {
     @Id
+    @Column(name="user_id")
     private UUID id = UUID.randomUUID();
 
     @NotNull

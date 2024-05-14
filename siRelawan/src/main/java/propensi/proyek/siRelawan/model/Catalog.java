@@ -60,4 +60,5 @@ public class Catalog {
     private String campaignSource;
     @Column(name = "Campaign Medium")
     private String campaignMedium;
+
 }

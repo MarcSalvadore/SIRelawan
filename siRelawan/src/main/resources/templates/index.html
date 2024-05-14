@@ -89,7 +89,7 @@
           <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
               <h6 class="mb-0">Program sosial terbaru</h6>
-              <div th:if="${role == 'ADMIN'}">
+              <div th:if="${role == 'ADMIN' || role == 'SUPERADMIN'}">
                 <a href="/catalog/create"
                   ><i class="fa-solid fa-plus"></i>Tambah program sosial baru</a
                 >

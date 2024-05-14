@@ -117,9 +117,16 @@ public class UserController {
     public String formUpdate(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         String currentUsername = (String) session.getAttribute("currentUser");
-        UserModel currentUserData = userService.getCurrentUser(currentUsername);
-        model.addAttribute("accountData", currentUserData);
-        return "user/profileAccount";
+        String role = session.getAttribute("currentRole").toString();
+        if (role.equals("RELAWAN") || role.equals("SUPERADMIN")) {
+            UserModel currentUserData = userService.getCurrentUser(currentUsername);
+            model.addAttribute("accountData", currentUserData);
+            model.addAttribute("role", session.getAttribute("currentRole"));
+
+            return "user/profileAccount";
+        } else {
+            return "error/403";
+        }
     }
 
     @PostMapping("/user/profile")
@@ -132,55 +139,60 @@ public class UserController {
                                 Model model) {
         HttpSession session = request.getSession();
         String currentUsername = (String) session.getAttribute("currentUser");
+        String role = session.getAttribute("currentRole").toString();
 
-        // Get current user data
-        UserModel currentUserData = userService.getCurrentUser(currentUsername);
-        updateUserRequestDTO.setEmail(currentUserData.getEmail());
-        updateUserRequestDTO.setFullName(currentUserData.getFullName());
-        updateUserRequestDTO.setUsername(currentUserData.getUsername());
-        updateUserRequestDTO.setPassword(currentUserData.getPassword());
-        updateUserRequestDTO.setNomorWA(currentUserData.getNomorWA());
+        if (role.equals("RELAWAN") || role.equals("SUPERADMIN")) {
+            // Get current user data
+            UserModel currentUserData = userService.getCurrentUser(currentUsername);
+            updateUserRequestDTO.setEmail(currentUserData.getEmail());
+            updateUserRequestDTO.setFullName(currentUserData.getFullName());
+            updateUserRequestDTO.setUsername(currentUserData.getUsername());
+            updateUserRequestDTO.setPassword(currentUserData.getPassword());
+            updateUserRequestDTO.setNomorWA(currentUserData.getNomorWA());
 
-        // Validate NIK, NPWP, and noRekening
-        boolean isValid = true;
+            // Validate NIK, NPWP, and noRekening
+            boolean isValid = true;
 
-        if (NIK != null && NIK.toString().length() != 16) {
-            redirectAttributes.addFlashAttribute("warning", "NIK must be 16 digits long.");
-            isValid = false;
-        }
+            if (NIK != null && NIK.toString().length() != 16) {
+                redirectAttributes.addFlashAttribute("warning", "NIK must be 16 digits long.");
+                isValid = false;
+            }
 
-        if (NPWP != null && NPWP.toString().length() != 15) {
-            redirectAttributes.addFlashAttribute("warning", "NPWP must be 15 digits long.");
-            isValid = false;
-        }
+            if (NPWP != null && NPWP.toString().length() != 15) {
+                redirectAttributes.addFlashAttribute("warning", "NPWP must be 15 digits long.");
+                isValid = false;
+            }
 
-        if (noRekening.toString().length() == 11 || noRekening.toString().length() == 14) {
-            redirectAttributes.addFlashAttribute("warning", "Bank account number cannot be 11 or 14 digits");
-            isValid = false;
-        }
+            if (noRekening.toString().length() == 11 || noRekening.toString().length() == 14) {
+                redirectAttributes.addFlashAttribute("warning", "Bank account number cannot be 11 or 14 digits");
+                isValid = false;
+            }
 
-        if (noRekening != null && noRekening.toString().length() < 10 || noRekening.toString().length() > 16) {
-            redirectAttributes.addFlashAttribute("warning", "Bank account number must be 10 - 16 digits");
-            isValid = false;
-        }
+            if (noRekening != null && noRekening.toString().length() < 10 || noRekening.toString().length() > 16) {
+                redirectAttributes.addFlashAttribute("warning", "Bank account number must be 10 - 16 digits");
+                isValid = false;
+            }
 
-        // If any validation fails, redirect back to the profile page with warnings
-        if (!isValid) {
+            // If any validation fails, redirect back to the profile page with warnings
+            if (!isValid) {
+                return "redirect:/user/profile";
+            }
+
+            // Update if all
+            updateUserRequestDTO.setNik(NIK);
+            updateUserRequestDTO.setNpwp(NPWP);
+            updateUserRequestDTO.setNoRekening(noRekening);
+            // Save the updated user data
+            userService.updateUser(currentUsername, updateUserRequestDTO);
+
+            // Add the updated user data to the model
+            model.addAttribute("accountData", currentUserData);
+            redirectAttributes.addFlashAttribute("success", "Account Updated!");
+
+            // Redirect back to the profile page
             return "redirect:/user/profile";
+        } else {
+            return "error/403";
         }
-
-        // Update if all
-        updateUserRequestDTO.setNik(NIK);
-        updateUserRequestDTO.setNpwp(NPWP);
-        updateUserRequestDTO.setNoRekening(noRekening);
-        // Save the updated user data
-        userService.updateUser(currentUsername, updateUserRequestDTO);
-
-        // Add the updated user data to the model
-        model.addAttribute("accountData", currentUserData);
-        redirectAttributes.addFlashAttribute("success", "Account Updated!");
-
-        // Redirect back to the profile page
-        return "redirect:/user/profile";
     }
 }

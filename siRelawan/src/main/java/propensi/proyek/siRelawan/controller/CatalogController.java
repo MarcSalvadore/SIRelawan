@@ -67,23 +67,24 @@ public class CatalogController {
     public String formAddCatalog(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String role = session.getAttribute("currentRole").toString();
-        if (role.equals("ADMIN")) {
+        if (role.equals("ADMIN") || role.equals("SUPERADMIN")) {
             // Membuat DTO baru sebagai isian form pengguna
             var catalogDTO = new CreateCatalogRequestDTO();
 
             model.addAttribute("catalog", catalogDTO);
+            model.addAttribute("role", session.getAttribute("currentRole"));
+
             return "form";
         } else {
             return "error/403";
         }
-
     }
 
     @PostMapping("catalog/create")
     public String addCatalog(@Valid @ModelAttribute CreateCatalogRequestDTO catalogDTO, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String role = session.getAttribute("currentRole").toString();
-        if (role.equals("ADMIN")) {
+        if (role.equals("ADMIN") || role.equals("SUPERADMIN")) {
             var catalog = catalogMapper.createCatalogRequestDTOToCatalog(catalogDTO);
             // Memanggil Service Add
             catalogService.createCatalog(catalog);
@@ -93,6 +94,7 @@ public class CatalogController {
 
             // Add variabel nama ke 'nama' untuk dirender di thymeleaf
             model.addAttribute("nama", catalog.getNama());
+            model.addAttribute("role", session.getAttribute("currentRole"));
 
             return "success-create-catalog";
         } else {
@@ -163,6 +165,7 @@ public class CatalogController {
             model.addAttribute("relawanCount", relawanCount);
             model.addAttribute("dataCompleteCount", dataCompleteCount);
             model.addAttribute("dataNotCompleteCount", dataNotCompleteCount);
+            model.addAttribute("role", session.getAttribute("currentRole"));
 
             return "statistik";
         } else {
@@ -194,12 +197,14 @@ public class CatalogController {
     public String formUpdateProgram(@PathVariable String id, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String role = session.getAttribute("currentRole").toString();
-        if (role.equals("ADMIN")) {
+        if (role.equals("ADMIN") || role.equals("SUPERADMIN")) {
             Catalog catalog = catalogService.getCatalogById(id);
             String status = String.valueOf(catalog.getStatus());
 
             model.addAttribute("program", catalog);
             model.addAttribute("status", status);
+            model.addAttribute("role", session.getAttribute("currentRole"));
+
             return "catalog/edit-program";
         } else {
             return "error/403";
@@ -210,7 +215,7 @@ public class CatalogController {
     public String updateProgram(@ModelAttribute Catalog catalog, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String role = session.getAttribute("currentRole").toString();
-        if (role.equals("ADMIN")) {
+        if (role.equals("ADMIN") || role.equals("SUPERADMIN")) {
             Catalog updatedCatalog = catalogService.updateCatalog(catalog);
 
             model.addAttribute("id", catalog.getId());
@@ -224,7 +229,7 @@ public class CatalogController {
     public String deleteProgram(@PathVariable String id, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String role = session.getAttribute("currentRole").toString();
-        if (role.equals("ADMIN")) {
+        if (role.equals("ADMIN") || role.equals("SUPERADMIN")) {
             catalogService.deleteCatalogById(id);
             return "redirect:/home";
         } else {
@@ -247,6 +252,8 @@ public class CatalogController {
             // Mengurutkan user dengan poin tertinggi ke terendah
             Collections.sort(users, Comparator.comparingInt(UserModel::getPoin).reversed());
             model.addAttribute("users", users);
+            model.addAttribute("role", session.getAttribute("currentRole"));
+
             return "poinRelawan";
         } else {
             return "error/403";
@@ -261,7 +268,10 @@ public class CatalogController {
 
 
     @GetMapping("/catalog/addpoint")
-    public String showAddPointsForm() {
+    public String showAddPointsForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        model.addAttribute("role", session.getAttribute("currentRole"));
         return "addpoint";
     }
     
@@ -292,5 +302,14 @@ public class CatalogController {
             modelAndView.setViewName("catalog/addpoint");
         }
         return modelAndView;
+    }
+
+    @GetMapping("catalog/target-program")
+    public String targetProgram(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+
+        model.addAttribute("role", session.getAttribute("currentRole"));
+        model.addAttribute("programs", catalogService.getAllCatalog());
+        return "target-program";
     }
 }

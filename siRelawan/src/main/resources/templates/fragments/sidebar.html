@@ -33,28 +33,26 @@
             ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a
           >
 
-          <a href="/catalog/create" class="nav-item nav-link" th:classappend="${page == 'form' ? 'active' : ''}"
+          <a th:if="${role == 'SUPERADMIN' || role == 'ADMIN'}" href="/catalog/create" class="nav-item nav-link" th:classappend="${page == 'form' ? 'active' : ''}"
             ><i class="fa fa-keyboard me-2"></i>Forms</a
           >
 
-          <a href="/catalog/statistik" class="nav-item nav-link" th:classappend="${page == 'statistik' ? 'active' : ''}"
+          <a th:if="${role == 'SUPERADMIN'}" href="/catalog/statistik" class="nav-item nav-link" th:classappend="${page == 'statistik' ? 'active' : ''}"
             ><i class="fas fa-chart-bar"></i>Statistik</a
           >
-
-          <a href="/catalog/target-program" class="nav-item nav-link" th:classappend="${page == 'target-program' ? 'active' : ''}"
-            ><i class="fas fa-file-alt"></i>Target Program</a
-          >
-
-          <a href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
+          <a th:if="${role == 'SUPERADMIN'}" href="/catalog/target-program" class="nav-item nav-link" th:classappend="${page == 'target-program' ? 'active' : ''}"
+          ><i class="fas fa-file-alt"></i>Target Program</a
+        >
+          <a th:if="${role == 'SUPERADMIN' || role == 'RELAWAN'}" href="/catalog/leaderboard" class="nav-item nav-link" th:classappend="${page == 'leaderboard' ? 'active' : ''}"
             ><i class="fas fa-user-alt"></i>Leaderboard</a
           >
 
-          <a href="/submission" class="nav-item nav-link" th:classappend="${page == 'submission' ? 'active' : ''}">
+          <a th:if="${role == 'SUPERADMIN' || role == 'RELAWAN'}" href="/submission" class="nav-item nav-link" th:classappend="${page == 'submission' ? 'active' : ''}">
             <i class="fas fa-upload me-2"></i>Submission
           </a>
 
           <div style="margin: 120px;"></div>
-          <a href="/user/profile" class="nav-item nav-link" th:classappend="${page == 'profile' ? 'active' : ''}"><i class="fas fa-user-alt"></i>Profile Account</a>
+          <a th:if="${role == 'SUPERADMIN' || role == 'RELAWAN'}" href="/user/profile" class="nav-item nav-link" th:classappend="${page == 'profile' ? 'active' : ''}"><i class="fas fa-user-alt"></i>Profile Account</a>
         </div>
         <!-- Logout Button -->
         <div class="navbar-nav w-100 mt-auto"> <!-- 'mt-auto' class added to push it to the bottom -->

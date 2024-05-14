@@ -1,5 +1,7 @@
 package propensi.proyek.siRelawan.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +30,12 @@ public class SubmissionController {
     SubmissionService submissionService;
 
     @GetMapping({"", "/"})
-    public String sortSubmission(Model model) {
+    public String sortSubmission(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
         List<Submission> submissions = submissionService.getAllSubmission();
         model.addAttribute("submissions", submissions);
+        model.addAttribute("role", session.getAttribute("currentRole"));
+
         return "submission";
     }
 
